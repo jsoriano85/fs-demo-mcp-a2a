@@ -1,0 +1,96 @@
+[project]
+name = "fsdemo"
+version = "0.1.0"
+description = "Local demo of MCP tools and A2A agent delegation."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "a2a-sdk[fastapi]==1.2.3",
+    "fastapi==0.150.0",
+    "httpx==0.28.1",
+    "mcp==2.3.0",
+    "pydantic==2.14.1",
+    "reportlab==5.0.1",
+    "uvicorn==0.54.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "black==26.10.1",
+    "mypy==2.4.0",
+    "pytest==9.1.1",
+    "pytest-asyncio==1.4.0",
+    "ruff==0.17.1",
+]
+
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.package-dir]
+"" = "src"
+mcp_server = "mcp_server"
+diagnosis_agent = "diagnosis_agent"
+repair_agent = "repair_agent"
+coordinator_agent = "coordinator_agent"
+fetch_agent = "fetch_agent"
+
+[tool.setuptools.packages.find]
+where = ["src", "."]
+include = [
+    "fsdemo*",
+    "mcp_server*",
+    "diagnosis_agent*",
+    "repair_agent*",
+    "coordinator_agent*",
+    "fetch_agent*",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+pythonpath = ["src", "."]
+
+[tool.ruff]
+target-version = "py312"
+src = [
+    "src",
+    "tests",
+    "docs",
+    "data",
+    "mcp_server",
+    "diagnosis_agent",
+    "repair_agent",
+    "coordinator_agent",
+    "fetch_agent",
+]
+line-length = 88
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.ruff.lint.per-file-ignores]
+"docs/build_guide.py" = ["E501"]
+
+[tool.black]
+target-version = ["py312"]
+line-length = 88
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+packages = [
+    "fsdemo",
+    "mcp_server",
+    "diagnosis_agent",
+    "repair_agent",
+    "coordinator_agent",
+    "fetch_agent",
+]
+mypy_path = "src:."
+warn_unused_ignores = true
+disallow_any_explicit = false
+
+[[tool.mypy.overrides]]
+module = ["a2a.*", "mcp.*", "reportlab.*", "uvicorn.*"]
+ignore_missing_imports = true

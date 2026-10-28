@@ -1,0 +1,18 @@
+.venv/
+__pycache__/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+*.pyc
+.env
+*.egg-info/
+dist/
+build/
+node_modules/
+
+# Training media stays on disk and out of the repository.
+*.mp4
+*.pptx
+*.rar
+*.docx
+~$*
